@@ -6,9 +6,10 @@ package org.intellij.sdk.language;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.TokenType;
+import static com.intellij.psi.TokenType.*;
 
-import static com.ogre.scriptlsp.lang.MaterialTypes.*;
+import static org.intellij.sdk.language.psi.MaterialElementTypes.*;
+import static com.ogre.scriptlsp.lang.parser.MaterialParserDefinition.*;
 
 
 public class _MaterialLexer implements FlexLexer {

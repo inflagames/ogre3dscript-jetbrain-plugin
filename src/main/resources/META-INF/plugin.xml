@@ -36,6 +36,8 @@
     <lang.syntaxHighlighter language="Ogre3d-material-script"
       implementationClass="com.ogre.scriptlsp.highlighting.Ogre3dSyntaxHighlighter"/>
     <colorSettingsPage implementation="com.ogre.scriptlsp.highlighting.Ogre3dColorSettingPage"/>
+    <annotator language="Ogre3d-material-script"
+      implementationClass="com.ogre.scriptlsp.highlighting.Ogre3dHighlightingAnnotator"/>
 
     <!--suppress PluginXmlValidity -->
     <platform.lsp.serverSupportProvider

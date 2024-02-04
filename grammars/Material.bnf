@@ -1,0 +1,83 @@
+{
+  parserClass='org.intellij.sdk.language.parser.MaterialParser'
+  parserUtilClass='com.ogre.scriptlsp.lang.parser.MaterialParserUtil'
+
+  implements='com.ogre.scriptlsp.lang.psi.MaterialElement'
+  extends='com.ogre.scriptlsp.lang.psi.impl.MaterialElementImp'
+
+  elementTypeHolderClass='org.intellij.sdk.language.psi.MaterialElementTypes'
+  elementTypeClass='com.ogre.scriptlsp.lang.MaterialElementType'
+  tokenTypeClass='com.ogre.scriptlsp.lang.psi.MaterialTokenType'
+
+  psiClassPrefix='Material'
+  psiImplClassSuffix='Iml'
+  psiPackage='org.intellij.sdk.language.psi'
+  psiImplPackage='org.intellij.sdk.language.psi.impl'
+
+  tokens=[
+    ABSTRACT = 'abstract'
+    DEFAULT_PARAMS = 'default_params'
+    ENTRY_POINT = 'entry_point'
+    FRAGMENT_PROGRAM = 'fragment_program'
+    FRAGMENT_PROGRAM_REF = 'fragment_program_ref'
+    IMPORT = 'import'
+    MATERIAL = 'material'
+    PASS = 'pass'
+    PROFILES = 'profiles'
+    TECHNIQUE = 'technique'
+    TEXTURE_UNIT = 'texture_unit'
+    VERTEX_PROGRAM = 'vertex_program'
+    VERTEX_PROGRAM_REF = 'vertex_program_ref'
+    LBRACE = '{'
+    RBRACE = '}'
+    COLON = ':'
+
+    STRING_LITERAL  = 'regexp:\"([^\\\"\r\n]|\\[^\r\n])*\"?'
+    MATCH_LITERAL  = 'regexp:\*([^\\\"\r\n]|\\[^\r\n])*\*?'
+    NUMERIC_LITERAL = 'regexp:-?\d+(\.\d+)?'
+    IDENTIFIER      = 'regexp:[a-zA-Z][a-zA-Z0-9\-_/]*'
+    VARIABLE      = 'regexp:\$[a-zA-Z][a-zA-Z0-9\-_]*'
+    ENDL = '\n'
+  ]
+}
+
+Script ::= ScriptBody*
+private ScriptBody ::= ProgramBlock | MaterialBlock | ENDL { pin=1 recoverWhile=RecoverDeclaration }
+
+private RecoverDeclaration ::= !DeclarationToken
+private DeclarationToken ::= FRAGMENT_PROGRAM | VERTEX_PROGRAM | MATERIAL | ABSTRACT
+
+ProgramBlock ::= ProgramType IDENTIFIER ProgramOpt ENDL* LBRACE ProgramItem* RBRACE
+ProgramType ::= FRAGMENT_PROGRAM | VERTEX_PROGRAM
+ProgramOpt ::= IDENTIFIER*
+private ProgramItem ::= ParamLine | ProgramDefault
+
+ProgramDefault ::= DEFAULT_PARAMS LBRACE ProgramDefaultItem* RBRACE
+ProgramDefaultItem ::= ParamLine
+
+
+MaterialBlock ::= MATERIAL MaterialName MaterialParent? ENDL* LBRACE MaterialItem* RBRACE
+MaterialName ::= IDENTIFIER
+MaterialParent ::= COLON IDENTIFIER
+MaterialItem ::= MaterialTechnique | ParamLine | ENDL
+
+MaterialTechnique ::= TECHNIQUE LBRACE ENDL* MaterialTechniqueItem* RBRACE
+MaterialTechniqueItem ::= MaterialPass | ENDL
+
+MaterialPass ::= PASS MaterialPassName MaterialPassParent? ENDL* LBRACE MaterialPassItem* RBRACE
+MaterialPassName ::= IDENTIFIER | MATCH_LITERAL
+MaterialPassParent ::= COLON IDENTIFIER | MATCH_LITERAL
+MaterialPassItem ::= ParamLine | MaterialTexture | MaterialProgram | ENDL
+
+MaterialTexture ::= TEXTURE_UNIT MaterialTextureName+ ENDL* LBRACE MaterialTextureItem* RBRACE
+MaterialTextureName ::= IDENTIFIER
+MaterialTextureItem ::= ParamLine | ENDL
+
+MaterialProgram ::= MaterialProgramType IDENTIFIER ENDL* LBRACE MaterialProgramItem* RBRACE
+MaterialProgramType ::= VERTEX_PROGRAM_REF | FRAGMENT_PROGRAM_REF
+MaterialProgramItem ::= ParamLine | ENDL
+
+
+private ParamLine ::= IDENTIFIER Param* ENDL
+Param ::= IDENTIFIER | STRING_LITERAL | NUMERIC_LITERAL | VARIABLE
+
