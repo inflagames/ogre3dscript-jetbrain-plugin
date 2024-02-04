@@ -27,17 +27,22 @@
   <extensions defaultExtensionNs="com.intellij">
     <fileType
       name="Ogre3d scripting"
-      implementationClass="com.ogre.scriptlsp.MaterialFileType"
+      implementationClass="com.ogre.scriptlsp.lang.MaterialFileType"
       fieldName="instance"
       language="Ogre3d-material-script"
       extensions="material"/>
 
+    <!--Syntax Highlighting-->
+    <lang.syntaxHighlighter language="Ogre3d-material-script"
+      implementationClass="com.ogre.scriptlsp.highlighting.Ogre3dSyntaxHighlighter"/>
+    <colorSettingsPage implementation="com.ogre.scriptlsp.highlighting.Ogre3dColorSettingPage"/>
+
     <!--suppress PluginXmlValidity -->
     <platform.lsp.serverSupportProvider
       implementation="com.ogre.scriptlsp.Ogre3dScriptLspServerSupportProvider"/>
-<!--    <lang.formatter-->
-<!--      language="Ogre3d-material-script"-->
-<!--      implementationClass="com.ogre.scriptlsp.formatter.Ogre3dFormattingModelBuilder"/>-->
+    <!--    <lang.formatter-->
+    <!--      language="Ogre3d-material-script"-->
+    <!--      implementationClass="com.ogre.scriptlsp.formatter.Ogre3dFormattingModelBuilder"/>-->
   </extensions>
 
 </idea-plugin>

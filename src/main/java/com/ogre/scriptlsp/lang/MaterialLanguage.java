@@ -1,4 +1,4 @@
-package com.ogre.scriptlsp;
+package com.ogre.scriptlsp.lang;
 
 import com.intellij.lang.Language;
 
