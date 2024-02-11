@@ -12,7 +12,10 @@ public class Ogre3dHighlightingAnnotator implements Annotator {
   @Override
   public void annotate(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
     if (psiElement == MaterialElementTypes.IDENTIFIER) {
-      annotationHolder.newAnnotation(HighlightSeverity.INFORMATION, "");
+      annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+          .textAttributes(Ogre3dColors.IDENTIFIER)
+          .range(psiElement)
+          .create();
     }
   }
 }

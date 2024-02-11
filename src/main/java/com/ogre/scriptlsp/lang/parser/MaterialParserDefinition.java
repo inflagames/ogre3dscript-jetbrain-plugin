@@ -12,6 +12,7 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import com.ogre.scriptlsp.lang.MaterialLexer;
+import com.ogre.scriptlsp.lang.psi.MaterialFile;
 import com.ogre.scriptlsp.lang.psi.MaterialTokenType;
 import org.intellij.sdk.language.parser.MaterialParser;
 import org.jetbrains.annotations.NotNull;
@@ -52,6 +53,6 @@ public class MaterialParserDefinition implements ParserDefinition {
 
   @Override
   public @NotNull PsiFile createFile(@NotNull FileViewProvider viewProvider) {
-    return null;
+    return new MaterialFile(viewProvider);
   }
 }

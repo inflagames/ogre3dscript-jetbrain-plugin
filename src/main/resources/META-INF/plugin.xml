@@ -42,9 +42,6 @@
     <!--suppress PluginXmlValidity -->
     <platform.lsp.serverSupportProvider
       implementation="com.ogre.scriptlsp.Ogre3dScriptLspServerSupportProvider"/>
-    <!--    <lang.formatter-->
-    <!--      language="Ogre3d-material-script"-->
-    <!--      implementationClass="com.ogre.scriptlsp.formatter.Ogre3dFormattingModelBuilder"/>-->
   </extensions>
 
 </idea-plugin>

@@ -43,7 +43,7 @@ public class Ogre3dSyntaxHighlighter extends SyntaxHighlighterBase {
     map.put(MaterialElementTypes.STRING_LITERAL, Ogre3dColors.IDENTIFIER);
     map.put(MaterialElementTypes.MATCH_LITERAL, Ogre3dColors.IDENTIFIER);
     map.put(MaterialElementTypes.VARIABLE, Ogre3dColors.IDENTIFIER);
-    map.put(MaterialParserDefinition.LINE_COMMENT, Ogre3dColors.IDENTIFIER);
+    map.put(MaterialParserDefinition.LINE_COMMENT, Ogre3dColors.COMMENT);
 
     return new TextAttributesKey[]{map.get(iElementType)};
   }
