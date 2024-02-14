@@ -6,6 +6,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.platform.lsp.api.ProjectWideLspServerDescriptor;
 import com.intellij.platform.lsp.api.customization.LspFormattingSupport;
+import com.jgoodies.common.base.SystemUtils;
+import com.ogre.scriptlsp.exceptions.CopyLspAppException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -34,19 +36,27 @@ public class Ogre3dScriptLspServerDescriptor extends ProjectWideLspServerDescrip
     return new GeneralCommandLine(executablePath);
   }
 
-  private String copyLspToSystem() {
+  private String copyLspToSystem() throws CopyLspAppException {
+    // todo: used for testing, can be removed when stable version
 //    return "ogre_scripts_LSP";
-    // todo: research where to copy the lsp script in the system
-    String executablePath = "";
-    try {
-      executablePath = System.getProperty("user.home") + "/ogre_scripts_LSP";
-      FileUtils.copyURLToFile(getClass().getResource("/lsp/ogre_scripts_LSP"), new File(executablePath));
-      if (new File(executablePath).setExecutable(true)) {
-        // todo exception here
+    String executablePath;
+    if (SystemUtils.IS_OS_LINUX) {
+      try {
+        executablePath = System.getProperty("user.home") + "/.local/bin/ogre_scripts_LSP";
+        if (!new File(executablePath).exists()) {
+          //noinspection DataFlowIssue
+          FileUtils.copyURLToFile(getClass().getResource("/lsp/ogre_scripts_LSP"), new File(executablePath));
+          if (!new File(executablePath).setExecutable(true)) {
+            throw new CopyLspAppException("Couldn't make the LSP application executable");
+          }
+        }
+      } catch (IOException | NullPointerException e) {
+        throw new CopyLspAppException("Couldn't copy the LSP (Language Server Protocol) application", e);
       }
-    } catch (IOException | NullPointerException e) {
-      // todo
-      throw new RuntimeException(e);
+    } else if (SystemUtils.IS_OS_WINDOWS) {
+      executablePath = "";
+    } else {
+      throw new CopyLspAppException("plugin not supported in OS");
     }
     return executablePath;
   }
