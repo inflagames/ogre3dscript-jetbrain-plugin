@@ -40,23 +40,26 @@ public class Ogre3dScriptLspServerDescriptor extends ProjectWideLspServerDescrip
     // todo: used for testing, can be removed when stable version
 //    return "ogre_scripts_LSP";
     String executablePath;
+    String resourceBinary;
     if (SystemUtils.IS_OS_LINUX) {
-      try {
-        executablePath = System.getProperty("user.home") + "/.local/bin/ogre_scripts_LSP";
-        if (!new File(executablePath).exists()) {
-          //noinspection DataFlowIssue
-          FileUtils.copyURLToFile(getClass().getResource("/lsp/ogre_scripts_LSP"), new File(executablePath));
-          if (!new File(executablePath).setExecutable(true)) {
-            throw new CopyLspAppException("Couldn't make the LSP application executable");
-          }
-        }
-      } catch (IOException | NullPointerException e) {
-        throw new CopyLspAppException("Couldn't copy the LSP (Language Server Protocol) application", e);
-      }
-    } else if (SystemUtils.IS_OS_WINDOWS) {
-      executablePath = "";
+      executablePath = System.getProperty("user.home") + "/.local/bin/ogre_scripts_LSP";
+      resourceBinary = "ogre_scripts_LSP";
+    }  else if (SystemUtils.IS_OS_WINDOWS) {
+      executablePath = System.getProperty("user.home") + "\\AppData\\Local\\Programs\\ogre_scripts_LSP.exe";
+      resourceBinary = "ogre_scripts_LSP.exe";
     } else {
       throw new CopyLspAppException("plugin not supported in OS");
+    }
+    try {
+      if (!new File(executablePath).exists()) {
+        //noinspection DataFlowIssue
+        FileUtils.copyURLToFile(getClass().getResource("/lsp/" + resourceBinary), new File(executablePath));
+        if (!new File(executablePath).setExecutable(true)) {
+          throw new CopyLspAppException("Couldn't make the LSP application executable");
+        }
+      }
+    } catch (IOException | NullPointerException e) {
+      throw new CopyLspAppException("Couldn't copy the LSP (Language Server Protocol) application", e);
     }
     return executablePath;
   }
