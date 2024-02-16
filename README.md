@@ -17,6 +17,8 @@ This plugin utilizes an LSP underneath. Currently, the plugin employs the classe
 
 > Note: looking forward for supporting more ogre3d scripts.
 
+## [License](./LICENSE)
+
 ## LSP server
 
 All the code of the server can be found under the repository:
