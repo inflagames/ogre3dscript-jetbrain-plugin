@@ -14,13 +14,26 @@
        Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
        Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
   <description><![CDATA[
-    This plugin enhances your coding experience by offering features such as code formatting and simple diagnostics. By highlighting errors before compilation, it helps streamline the debugging process. Furthermore, the 'go-to definition' support provided by these plugins facilitates seamless navigation through your codebase, allowing you to quickly locate and access specific elements within your files.<br><br>
+  <p>This plugin enhances your coding experience by offering features such as code formatting and simple diagnostics. By highlighting errors before compilation, it helps streamline the debugging process. Furthermore, the &#39;go-to definition&#39; support provided by these plugins facilitates seamless navigation through your codebase, allowing you to quickly locate and access specific elements within your files.<br />
+<br />
+The plugin utilizes an LSP underneath and for that, it employs the classes provided by the Platform Plugin SDK to handle all the client-side aspects of the LSP protocol. Only the token highlighting is performed by the plugin.<br />
+<br />
+<strong>Ogre3d script languages supported (at the moment)</strong></p>
 
-The plugin utilizes an LSP underneath and for that its employs the classes provided by the Platform Plugin SDK to handle all the client-side aspects of the LSP protocol. Only the token highlighting is performed by the plugin.<br><br>
+<ul>
+	<li>*.material</li>
+</ul>
 
-<b>Ogre3d script languages supported (at the moment)</b><br>
+<p><br />
+<strong>Where is the LSP binary copied?</strong><br />
+The binary is copied depending on the OS in the bin folder of the system. Examples:</p>
 
-<ul><li>*.material</li></ul>
+<p>&nbsp;</p>
+
+<ul>
+	<li>Linux: <strong><em>/home/username/.local/bin/ogre_scripts_LSP</em></strong></li>
+	<li>Windows: <strong><em>C:\Users\username\AppData\Local\Programs\ogre_scripts_LSP.exe</em></strong></li>
+</ul>
   ]]></description>
 
   <!-- Product and plugin compatibility requirements.
