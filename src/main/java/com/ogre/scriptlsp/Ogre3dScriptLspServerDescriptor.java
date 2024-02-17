@@ -10,7 +10,8 @@ import com.jgoodies.common.base.SystemUtils;
 import com.ogre.scriptlsp.exceptions.CopyLspAppException;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.util.Arrays;
+
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -33,7 +34,7 @@ public class Ogre3dScriptLspServerDescriptor extends ProjectWideLspServerDescrip
     // copy lsp to tmp files before being executed
     String executablePath = copyLspToSystem();
 
-    return new GeneralCommandLine(executablePath);
+      return new GeneralCommandLine(Arrays.asList(executablePath, "-l"));
   }
 
   private String copyLspToSystem() throws CopyLspAppException {
