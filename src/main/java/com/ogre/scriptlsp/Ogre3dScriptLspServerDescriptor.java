@@ -81,6 +81,7 @@ public class Ogre3dScriptLspServerDescriptor extends ProjectWideLspServerDescrip
     DigestInputStream dis = new DigestInputStream(is, md);
     while (dis.read() != -1) {
     }
+    dis.close();
     return new String(md.digest());
   }
 
