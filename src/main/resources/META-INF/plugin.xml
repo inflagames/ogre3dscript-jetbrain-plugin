@@ -28,11 +28,24 @@ The plugin utilizes an LSP underneath and for that, it employs the classes provi
 <strong>Where is the LSP binary copied?</strong><br />
 The binary is copied depending on the OS in the bin folder of the system. Examples:</p>
 
-<p>&nbsp;</p>
-
 <ul>
 	<li>Linux: <strong><em>/home/username/.local/bin/ogre_scripts_LSP</em></strong></li>
 	<li>Windows: <strong><em>C:\Users\username\AppData\Local\Programs\ogre_scripts_LSP.exe</em></strong></li>
+</ul>
+
+<p>&nbsp;</p>
+
+<p><strong>Errors in Windows</strong></p>
+
+<p><strong>- Windows Defender: </strong>Could happen that Windows Defender avoids JetBrains from executing the LSPServer binary. Check the JetBrains Alerts and give permissions to the binary.</p>
+
+<p>&nbsp;</p>
+
+<p><strong>Repositories</strong></p>
+
+<ul>
+	<li>Plugin repository:&nbsp;<a href="https://github.com/inflagames/ogre3dscript-jetbrain-plugin">https://github.com/inflagames/ogre3dscript-jetbrain-plugin</a></li>
+	<li>LSP server repository:&nbsp;<a href="https://github.com/inflagames/ogre-scripts-LSP">https://github.com/inflagames/ogre-scripts-LSP</a></li>
 </ul>
   ]]></description>
 
