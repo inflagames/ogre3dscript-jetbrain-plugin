@@ -23,13 +23,15 @@ import static com.ogre.scriptlsp.lang.parser.MaterialParserDefinition.*;
 %function advance
 %type IElementType
 
-IDENTIFIER       =  ([:jletterdigit:]-){1}([:jletterdigit:]|\/)*
-STRING_LITERAL   =  \"([^\\\"\r\n]|\\[^\r\n])*\"?
-MATCH_LITERAL    =  \*([^\\\"\r\n]|\\[^\r\n])*\*?
-VARIABLE         =  \$[:jletter:][:jletterdigit:]*
-NUMERIC_LITERAL  =  "-"? [:digit:]+ ("." [:digit:]+)?
-LINE_COMMENT     =  "//" .*
-MULTILINE_COMMENT     =  "/*" .* "*/"
+LineTerminator        = \r|\n|\r\n
+
+IDENTIFIER            =  ([:jletterdigit:]-){1}([:jletterdigit:]|\/)*
+STRING_LITERAL        =  \"([^\\\"\r\n]|\\[^\r\n])*\"?
+MATCH_LITERAL         =  \*([^\\\"\r\n]|\\[^\r\n])*\*?
+VARIABLE              =  \$[:jletter:][:jletterdigit:]*
+NUMERIC_LITERAL       =  "-"? [:digit:]+ ("." [:digit:]+)?
+LINE_COMMENT          =  "//" [^\r\n]* {LineTerminator}?
+MULTILINE_COMMENT     =  "/*" [^*] ~"*/" | "/*" "*"+ "/"
 
 //%state IDEN
 
