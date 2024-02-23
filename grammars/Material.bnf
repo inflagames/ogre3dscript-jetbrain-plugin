@@ -17,20 +17,39 @@
   tokens=[
     ABSTRACT = 'abstract'
     DEFAULT_PARAMS = 'default_params'
-    ENTRY_POINT = 'entry_point'
-    FRAGMENT_PROGRAM = 'fragment_program'
-    FRAGMENT_PROGRAM_REF = 'fragment_program_ref'
+    FROM = 'from'
     IMPORT = 'import'
     MATERIAL = 'material'
     PASS = 'pass'
-    PROFILES = 'profiles'
     TECHNIQUE = 'technique'
     TEXTURE_UNIT = 'texture_unit'
+    RTSHADER_SYSTEM = 'rtshader_system'
+    SHARED_PARAMS = 'shared_params'
+    SHARED_PARAMS_REF = 'shared_params_ref'
+    SHADOW_CASTER_MATERIAL = 'shadow_caster_material'
+    SHADOW_RECEIVER_MATERIAL = 'shadow_receiver_material'
+    TEXTURE_SOURCE = 'texture_source'
+    SAMPLER = 'sampler'
+    SAMPLER_REF = 'sampler_ref'
+
+    FRAGMENT_PROGRAM = 'fragment_program'
+    FRAGMENT_PROGRAM_REF = 'fragment_program_ref'
     VERTEX_PROGRAM = 'vertex_program'
     VERTEX_PROGRAM_REF = 'vertex_program_ref'
+    GEOMETRY_PROGRAM = 'geometry_program'
+    GEOMETRY_PROGRAM_REF = 'geometry_program_ref'
+    TESSELLATION_HULL_PROGRAM = 'tessellation_hull_program'
+    TESSELLATION_HULL_PROGRAM_REF = 'tessellation_hull_program_ref'
+    TESSELLATION_DOMAIN_PROGRAM = 'tessellation_domain_program'
+    TESSELLATION_DOMAIN_PROGRAM_REF = 'tessellation_domain_program_ref'
+    COMPUTE_PROGRAM = 'compute_program'
+    COMPUTE_PROGRAM_REF = 'compute_program_ref'
+
     LBRACE = '{'
+    ASTERISK = '*'
     RBRACE = '}'
     COLON = ':'
+    COMMA = ','
 
     STRING_LITERAL  = 'regexp:\"([^\\\"\r\n]|\\[^\r\n])*\"?'
     MATCH_LITERAL  = 'regexp:\*([^\\\"\r\n]|\\[^\r\n])*\*?'
@@ -42,42 +61,74 @@
 }
 
 Script ::= ScriptBody*
-private ScriptBody ::= ProgramBlock | MaterialBlock | ENDL { pin=1 recoverWhile=RecoverDeclaration }
+private ScriptBody ::= ImportBlock | SamplerBlock | AbstractBlock | ProgramBlock | MaterialBlock | ENDL { pin=1 recoverWhile=RecoverDeclaration }
 
 private RecoverDeclaration ::= !DeclarationToken
 private DeclarationToken ::= FRAGMENT_PROGRAM | VERTEX_PROGRAM | MATERIAL | ABSTRACT
 
-ProgramBlock ::= ProgramType IDENTIFIER ProgramOpt ENDL* LBRACE ProgramItem* RBRACE
+// program
+ProgramBlock ::= ProgramType IDENTIFIER+ ENDL* LBRACE ProgramItem* RBRACE
 ProgramType ::= FRAGMENT_PROGRAM | VERTEX_PROGRAM
-ProgramOpt ::= IDENTIFIER*
-private ProgramItem ::= ParamLine | ProgramDefault
+private ProgramItem ::= ParamLine | ProgramDefault | SharedParamRef | ENDL
 
 ProgramDefault ::= DEFAULT_PARAMS LBRACE ProgramDefaultItem* RBRACE
 ProgramDefaultItem ::= ParamLine
 
+// import
+ImportBlock ::= IMPORT ImportName FROM ImportSource ENDL
+ImportName ::= ASTERISK | IDENTIFIER
+ImportSource ::= STRING_LITERAL | IDENTIFIER
 
+// sampler
+SamplerBlock ::= SAMPLER IDENTIFIER ENDL* LBRACE SamplerItem* RBRACE
+SamplerItem ::= ParamLine | ENDL
+
+// abstract
+AbstractBlock ::= ABSTRACT AbstractItem*
+AbstractItem ::= AbstractMaterial | AbstractTechnique | AbstractPass | AbstractTexture
+AbstractMaterial ::= MATERIAL IDENTIFIER ENDL* LBRACE MaterialItem* RBRACE
+AbstractTechnique ::= TECHNIQUE IDENTIFIER ENDL* LBRACE MaterialTechniqueItem* RBRACE
+AbstractPass ::= PASS IDENTIFIER ENDL* LBRACE MaterialPassItem* RBRACE
+AbstractTexture ::= TEXTURE_UNIT IDENTIFIER ENDL* LBRACE MaterialTextureItem* RBRACE
+
+// material
 MaterialBlock ::= MATERIAL MaterialName MaterialParent? ENDL* LBRACE MaterialItem* RBRACE
 MaterialName ::= IDENTIFIER
 MaterialParent ::= COLON IDENTIFIER
 MaterialItem ::= MaterialTechnique | ParamLine | ENDL
 
-MaterialTechnique ::= TECHNIQUE LBRACE ENDL* MaterialTechniqueItem* RBRACE
-MaterialTechniqueItem ::= MaterialPass | ENDL
 
-MaterialPass ::= PASS MaterialPassName MaterialPassParent? ENDL* LBRACE MaterialPassItem* RBRACE
-MaterialPassName ::= IDENTIFIER | MATCH_LITERAL
+MaterialTechnique ::= TECHNIQUE IDENTIFIER* LBRACE ENDL* MaterialTechniqueItem* RBRACE
+MaterialTechniqueItem ::= MaterialPass | ParamLine | Technique_shadow_material | ENDL
+
+Technique_shadow_material ::= Technique_shadow_materialType IDENTIFIER ENDL
+Technique_shadow_materialType ::= SHADOW_CASTER_MATERIAL | SHADOW_RECEIVER_MATERIAL
+
+
+MaterialPass ::= PASS IDENTIFIER* MaterialPassParent? ENDL* LBRACE MaterialPassItem* RBRACE
 MaterialPassParent ::= COLON IDENTIFIER | MATCH_LITERAL
-MaterialPassItem ::= ParamLine | MaterialTexture | MaterialProgram | ENDL
+MaterialPassItem ::= ParamLine | MaterialTexture | MaterialProgram | RtShaderSystem | ENDL
+
 
 MaterialTexture ::= TEXTURE_UNIT MaterialTextureName+ ENDL* LBRACE MaterialTextureItem* RBRACE
 MaterialTextureName ::= IDENTIFIER
-MaterialTextureItem ::= ParamLine | ENDL
+MaterialTextureItem ::= ParamLine | MaterialSamplerRef | MaterialTextureSource | RtShaderSystem | ENDL
+
+MaterialSamplerRef ::= SAMPLER_REF IDENTIFIER ENDL
+
+RtShaderSystem ::= RTSHADER_SYSTEM IDENTIFIER+ ENDL* LBRACE RtShaderSystemItem* RBRACE
+RtShaderSystemItem ::= ParamLine | ENDL
+
+MaterialTextureSource ::= TEXTURE_SOURCE IDENTIFIER* ENDL* LBRACE MaterialTextureSourceItem* RBRACE
+MaterialTextureSourceItem ::= ParamLine | ENDL
+
 
 MaterialProgram ::= MaterialProgramType IDENTIFIER ENDL* LBRACE MaterialProgramItem* RBRACE
 MaterialProgramType ::= VERTEX_PROGRAM_REF | FRAGMENT_PROGRAM_REF
-MaterialProgramItem ::= ParamLine | ENDL
+MaterialProgramItem ::= ParamLine | SharedParamRef | ENDL
 
 
+SharedParamRef ::= SHARED_PARAMS_REF IDENTIFIER ENDL
 private ParamLine ::= IDENTIFIER Param* ENDL
 Param ::= IDENTIFIER | STRING_LITERAL | NUMERIC_LITERAL | VARIABLE
 

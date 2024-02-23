@@ -36,6 +36,196 @@ public class MaterialParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // ABSTRACT AbstractItem*
+  public static boolean AbstractBlock(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AbstractBlock")) return false;
+    if (!nextTokenIs(b, ABSTRACT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ABSTRACT);
+    r = r && AbstractBlock_1(b, l + 1);
+    exit_section_(b, m, ABSTRACT_BLOCK, r);
+    return r;
+  }
+
+  // AbstractItem*
+  private static boolean AbstractBlock_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AbstractBlock_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!AbstractItem(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "AbstractBlock_1", c)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // AbstractMaterial | AbstractTechnique | AbstractPass | AbstractTexture
+  public static boolean AbstractItem(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AbstractItem")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, ABSTRACT_ITEM, "<abstract item>");
+    r = AbstractMaterial(b, l + 1);
+    if (!r) r = AbstractTechnique(b, l + 1);
+    if (!r) r = AbstractPass(b, l + 1);
+    if (!r) r = AbstractTexture(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // MATERIAL IDENTIFIER ENDL* LBRACE MaterialItem* RBRACE
+  public static boolean AbstractMaterial(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AbstractMaterial")) return false;
+    if (!nextTokenIs(b, MATERIAL)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, MATERIAL, IDENTIFIER);
+    r = r && AbstractMaterial_2(b, l + 1);
+    r = r && consumeToken(b, LBRACE);
+    r = r && AbstractMaterial_4(b, l + 1);
+    r = r && consumeToken(b, RBRACE);
+    exit_section_(b, m, ABSTRACT_MATERIAL, r);
+    return r;
+  }
+
+  // ENDL*
+  private static boolean AbstractMaterial_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AbstractMaterial_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!consumeToken(b, ENDL)) break;
+      if (!empty_element_parsed_guard_(b, "AbstractMaterial_2", c)) break;
+    }
+    return true;
+  }
+
+  // MaterialItem*
+  private static boolean AbstractMaterial_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AbstractMaterial_4")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!MaterialItem(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "AbstractMaterial_4", c)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // PASS IDENTIFIER ENDL* LBRACE MaterialPassItem* RBRACE
+  public static boolean AbstractPass(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AbstractPass")) return false;
+    if (!nextTokenIs(b, PASS)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, PASS, IDENTIFIER);
+    r = r && AbstractPass_2(b, l + 1);
+    r = r && consumeToken(b, LBRACE);
+    r = r && AbstractPass_4(b, l + 1);
+    r = r && consumeToken(b, RBRACE);
+    exit_section_(b, m, ABSTRACT_PASS, r);
+    return r;
+  }
+
+  // ENDL*
+  private static boolean AbstractPass_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AbstractPass_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!consumeToken(b, ENDL)) break;
+      if (!empty_element_parsed_guard_(b, "AbstractPass_2", c)) break;
+    }
+    return true;
+  }
+
+  // MaterialPassItem*
+  private static boolean AbstractPass_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AbstractPass_4")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!MaterialPassItem(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "AbstractPass_4", c)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // TECHNIQUE IDENTIFIER ENDL* LBRACE MaterialTechniqueItem* RBRACE
+  public static boolean AbstractTechnique(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AbstractTechnique")) return false;
+    if (!nextTokenIs(b, TECHNIQUE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, TECHNIQUE, IDENTIFIER);
+    r = r && AbstractTechnique_2(b, l + 1);
+    r = r && consumeToken(b, LBRACE);
+    r = r && AbstractTechnique_4(b, l + 1);
+    r = r && consumeToken(b, RBRACE);
+    exit_section_(b, m, ABSTRACT_TECHNIQUE, r);
+    return r;
+  }
+
+  // ENDL*
+  private static boolean AbstractTechnique_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AbstractTechnique_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!consumeToken(b, ENDL)) break;
+      if (!empty_element_parsed_guard_(b, "AbstractTechnique_2", c)) break;
+    }
+    return true;
+  }
+
+  // MaterialTechniqueItem*
+  private static boolean AbstractTechnique_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AbstractTechnique_4")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!MaterialTechniqueItem(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "AbstractTechnique_4", c)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // TEXTURE_UNIT IDENTIFIER ENDL* LBRACE MaterialTextureItem* RBRACE
+  public static boolean AbstractTexture(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AbstractTexture")) return false;
+    if (!nextTokenIs(b, TEXTURE_UNIT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, TEXTURE_UNIT, IDENTIFIER);
+    r = r && AbstractTexture_2(b, l + 1);
+    r = r && consumeToken(b, LBRACE);
+    r = r && AbstractTexture_4(b, l + 1);
+    r = r && consumeToken(b, RBRACE);
+    exit_section_(b, m, ABSTRACT_TEXTURE, r);
+    return r;
+  }
+
+  // ENDL*
+  private static boolean AbstractTexture_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AbstractTexture_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!consumeToken(b, ENDL)) break;
+      if (!empty_element_parsed_guard_(b, "AbstractTexture_2", c)) break;
+    }
+    return true;
+  }
+
+  // MaterialTextureItem*
+  private static boolean AbstractTexture_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AbstractTexture_4")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!MaterialTextureItem(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "AbstractTexture_4", c)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
   // FRAGMENT_PROGRAM | VERTEX_PROGRAM | MATERIAL | ABSTRACT
   static boolean DeclarationToken(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "DeclarationToken")) return false;
@@ -44,6 +234,48 @@ public class MaterialParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, VERTEX_PROGRAM);
     if (!r) r = consumeToken(b, MATERIAL);
     if (!r) r = consumeToken(b, ABSTRACT);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // IMPORT ImportName FROM ImportSource ENDL
+  public static boolean ImportBlock(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ImportBlock")) return false;
+    if (!nextTokenIs(b, IMPORT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IMPORT);
+    r = r && ImportName(b, l + 1);
+    r = r && consumeToken(b, FROM);
+    r = r && ImportSource(b, l + 1);
+    r = r && consumeToken(b, ENDL);
+    exit_section_(b, m, IMPORT_BLOCK, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // ASTERISK | IDENTIFIER
+  public static boolean ImportName(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ImportName")) return false;
+    if (!nextTokenIs(b, "<import name>", ASTERISK, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, IMPORT_NAME, "<import name>");
+    r = consumeToken(b, ASTERISK);
+    if (!r) r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // STRING_LITERAL | IDENTIFIER
+  public static boolean ImportSource(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ImportSource")) return false;
+    if (!nextTokenIs(b, "<import source>", IDENTIFIER, STRING_LITERAL)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, IMPORT_SOURCE, "<import source>");
+    r = consumeToken(b, STRING_LITERAL);
+    if (!r) r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
@@ -132,14 +364,14 @@ public class MaterialParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // PASS MaterialPassName MaterialPassParent? ENDL* LBRACE MaterialPassItem* RBRACE
+  // PASS IDENTIFIER* MaterialPassParent? ENDL* LBRACE MaterialPassItem* RBRACE
   public static boolean MaterialPass(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MaterialPass")) return false;
     if (!nextTokenIs(b, PASS)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, PASS);
-    r = r && MaterialPassName(b, l + 1);
+    r = r && MaterialPass_1(b, l + 1);
     r = r && MaterialPass_2(b, l + 1);
     r = r && MaterialPass_3(b, l + 1);
     r = r && consumeToken(b, LBRACE);
@@ -147,6 +379,17 @@ public class MaterialParser implements PsiParser, LightPsiParser {
     r = r && consumeToken(b, RBRACE);
     exit_section_(b, m, MATERIAL_PASS, r);
     return r;
+  }
+
+  // IDENTIFIER*
+  private static boolean MaterialPass_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MaterialPass_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!consumeToken(b, IDENTIFIER)) break;
+      if (!empty_element_parsed_guard_(b, "MaterialPass_1", c)) break;
+    }
+    return true;
   }
 
   // MaterialPassParent?
@@ -179,7 +422,7 @@ public class MaterialParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ParamLine | MaterialTexture | MaterialProgram | ENDL
+  // ParamLine | MaterialTexture | MaterialProgram | RtShaderSystem | ENDL
   public static boolean MaterialPassItem(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MaterialPassItem")) return false;
     boolean r;
@@ -187,20 +430,8 @@ public class MaterialParser implements PsiParser, LightPsiParser {
     r = ParamLine(b, l + 1);
     if (!r) r = MaterialTexture(b, l + 1);
     if (!r) r = MaterialProgram(b, l + 1);
+    if (!r) r = RtShaderSystem(b, l + 1);
     if (!r) r = consumeToken(b, ENDL);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // IDENTIFIER | MATCH_LITERAL
-  public static boolean MaterialPassName(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "MaterialPassName")) return false;
-    if (!nextTokenIs(b, "<material pass name>", IDENTIFIER, MATCH_LITERAL)) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, MATERIAL_PASS_NAME, "<material pass name>");
-    r = consumeToken(b, IDENTIFIER);
-    if (!r) r = consumeToken(b, MATCH_LITERAL);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -258,13 +489,13 @@ public class MaterialParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ParamLine | ENDL
+  // ParamLine | SharedParamRef | ENDL
   public static boolean MaterialProgramItem(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MaterialProgramItem")) return false;
-    if (!nextTokenIs(b, "<material program item>", ENDL, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, MATERIAL_PROGRAM_ITEM, "<material program item>");
     r = ParamLine(b, l + 1);
+    if (!r) r = SharedParamRef(b, l + 1);
     if (!r) r = consumeToken(b, ENDL);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -284,50 +515,76 @@ public class MaterialParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // TECHNIQUE LBRACE ENDL* MaterialTechniqueItem* RBRACE
+  // SAMPLER_REF IDENTIFIER ENDL
+  public static boolean MaterialSamplerRef(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MaterialSamplerRef")) return false;
+    if (!nextTokenIs(b, SAMPLER_REF)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, SAMPLER_REF, IDENTIFIER, ENDL);
+    exit_section_(b, m, MATERIAL_SAMPLER_REF, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // TECHNIQUE IDENTIFIER* LBRACE ENDL* MaterialTechniqueItem* RBRACE
   public static boolean MaterialTechnique(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MaterialTechnique")) return false;
     if (!nextTokenIs(b, TECHNIQUE)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, TECHNIQUE, LBRACE);
-    r = r && MaterialTechnique_2(b, l + 1);
+    r = consumeToken(b, TECHNIQUE);
+    r = r && MaterialTechnique_1(b, l + 1);
+    r = r && consumeToken(b, LBRACE);
     r = r && MaterialTechnique_3(b, l + 1);
+    r = r && MaterialTechnique_4(b, l + 1);
     r = r && consumeToken(b, RBRACE);
     exit_section_(b, m, MATERIAL_TECHNIQUE, r);
     return r;
   }
 
-  // ENDL*
-  private static boolean MaterialTechnique_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "MaterialTechnique_2")) return false;
+  // IDENTIFIER*
+  private static boolean MaterialTechnique_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MaterialTechnique_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!consumeToken(b, ENDL)) break;
-      if (!empty_element_parsed_guard_(b, "MaterialTechnique_2", c)) break;
+      if (!consumeToken(b, IDENTIFIER)) break;
+      if (!empty_element_parsed_guard_(b, "MaterialTechnique_1", c)) break;
     }
     return true;
   }
 
-  // MaterialTechniqueItem*
+  // ENDL*
   private static boolean MaterialTechnique_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MaterialTechnique_3")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!MaterialTechniqueItem(b, l + 1)) break;
+      if (!consumeToken(b, ENDL)) break;
       if (!empty_element_parsed_guard_(b, "MaterialTechnique_3", c)) break;
     }
     return true;
   }
 
+  // MaterialTechniqueItem*
+  private static boolean MaterialTechnique_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MaterialTechnique_4")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!MaterialTechniqueItem(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "MaterialTechnique_4", c)) break;
+    }
+    return true;
+  }
+
   /* ********************************************************** */
-  // MaterialPass | ENDL
+  // MaterialPass | ParamLine | Technique_shadow_material | ENDL
   public static boolean MaterialTechniqueItem(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MaterialTechniqueItem")) return false;
-    if (!nextTokenIs(b, "<material technique item>", ENDL, PASS)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, MATERIAL_TECHNIQUE_ITEM, "<material technique item>");
     r = MaterialPass(b, l + 1);
+    if (!r) r = ParamLine(b, l + 1);
+    if (!r) r = Technique_shadow_material(b, l + 1);
     if (!r) r = consumeToken(b, ENDL);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -388,13 +645,15 @@ public class MaterialParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ParamLine | ENDL
+  // ParamLine | MaterialSamplerRef | MaterialTextureSource | RtShaderSystem | ENDL
   public static boolean MaterialTextureItem(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MaterialTextureItem")) return false;
-    if (!nextTokenIs(b, "<material texture item>", ENDL, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, MATERIAL_TEXTURE_ITEM, "<material texture item>");
     r = ParamLine(b, l + 1);
+    if (!r) r = MaterialSamplerRef(b, l + 1);
+    if (!r) r = MaterialTextureSource(b, l + 1);
+    if (!r) r = RtShaderSystem(b, l + 1);
     if (!r) r = consumeToken(b, ENDL);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -409,6 +668,69 @@ public class MaterialParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeToken(b, IDENTIFIER);
     exit_section_(b, m, MATERIAL_TEXTURE_NAME, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // TEXTURE_SOURCE IDENTIFIER* ENDL* LBRACE MaterialTextureSourceItem* RBRACE
+  public static boolean MaterialTextureSource(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MaterialTextureSource")) return false;
+    if (!nextTokenIs(b, TEXTURE_SOURCE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, TEXTURE_SOURCE);
+    r = r && MaterialTextureSource_1(b, l + 1);
+    r = r && MaterialTextureSource_2(b, l + 1);
+    r = r && consumeToken(b, LBRACE);
+    r = r && MaterialTextureSource_4(b, l + 1);
+    r = r && consumeToken(b, RBRACE);
+    exit_section_(b, m, MATERIAL_TEXTURE_SOURCE, r);
+    return r;
+  }
+
+  // IDENTIFIER*
+  private static boolean MaterialTextureSource_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MaterialTextureSource_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!consumeToken(b, IDENTIFIER)) break;
+      if (!empty_element_parsed_guard_(b, "MaterialTextureSource_1", c)) break;
+    }
+    return true;
+  }
+
+  // ENDL*
+  private static boolean MaterialTextureSource_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MaterialTextureSource_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!consumeToken(b, ENDL)) break;
+      if (!empty_element_parsed_guard_(b, "MaterialTextureSource_2", c)) break;
+    }
+    return true;
+  }
+
+  // MaterialTextureSourceItem*
+  private static boolean MaterialTextureSource_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MaterialTextureSource_4")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!MaterialTextureSourceItem(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "MaterialTextureSource_4", c)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // ParamLine | ENDL
+  public static boolean MaterialTextureSourceItem(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MaterialTextureSourceItem")) return false;
+    if (!nextTokenIs(b, "<material texture source item>", ENDL, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, MATERIAL_TEXTURE_SOURCE_ITEM, "<material texture source item>");
+    r = ParamLine(b, l + 1);
+    if (!r) r = consumeToken(b, ENDL);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
@@ -452,41 +774,55 @@ public class MaterialParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ProgramType IDENTIFIER ProgramOpt ENDL* LBRACE ProgramItem* RBRACE
+  // ProgramType IDENTIFIER+ ENDL* LBRACE ProgramItem* RBRACE
   public static boolean ProgramBlock(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ProgramBlock")) return false;
     if (!nextTokenIs(b, "<program block>", FRAGMENT_PROGRAM, VERTEX_PROGRAM)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, PROGRAM_BLOCK, "<program block>");
     r = ProgramType(b, l + 1);
-    r = r && consumeToken(b, IDENTIFIER);
-    r = r && ProgramOpt(b, l + 1);
-    r = r && ProgramBlock_3(b, l + 1);
+    r = r && ProgramBlock_1(b, l + 1);
+    r = r && ProgramBlock_2(b, l + 1);
     r = r && consumeToken(b, LBRACE);
-    r = r && ProgramBlock_5(b, l + 1);
+    r = r && ProgramBlock_4(b, l + 1);
     r = r && consumeToken(b, RBRACE);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
+  // IDENTIFIER+
+  private static boolean ProgramBlock_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ProgramBlock_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENTIFIER);
+    while (r) {
+      int c = current_position_(b);
+      if (!consumeToken(b, IDENTIFIER)) break;
+      if (!empty_element_parsed_guard_(b, "ProgramBlock_1", c)) break;
+    }
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   // ENDL*
-  private static boolean ProgramBlock_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ProgramBlock_3")) return false;
+  private static boolean ProgramBlock_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ProgramBlock_2")) return false;
     while (true) {
       int c = current_position_(b);
       if (!consumeToken(b, ENDL)) break;
-      if (!empty_element_parsed_guard_(b, "ProgramBlock_3", c)) break;
+      if (!empty_element_parsed_guard_(b, "ProgramBlock_2", c)) break;
     }
     return true;
   }
 
   // ProgramItem*
-  private static boolean ProgramBlock_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ProgramBlock_5")) return false;
+  private static boolean ProgramBlock_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ProgramBlock_4")) return false;
     while (true) {
       int c = current_position_(b);
       if (!ProgramItem(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "ProgramBlock_5", c)) break;
+      if (!empty_element_parsed_guard_(b, "ProgramBlock_4", c)) break;
     }
     return true;
   }
@@ -529,28 +865,15 @@ public class MaterialParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ParamLine | ProgramDefault
+  // ParamLine | ProgramDefault | SharedParamRef | ENDL
   static boolean ProgramItem(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ProgramItem")) return false;
-    if (!nextTokenIs(b, "", DEFAULT_PARAMS, IDENTIFIER)) return false;
     boolean r;
     r = ParamLine(b, l + 1);
     if (!r) r = ProgramDefault(b, l + 1);
+    if (!r) r = SharedParamRef(b, l + 1);
+    if (!r) r = consumeToken(b, ENDL);
     return r;
-  }
-
-  /* ********************************************************** */
-  // IDENTIFIER*
-  public static boolean ProgramOpt(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ProgramOpt")) return false;
-    Marker m = enter_section_(b, l, _NONE_, PROGRAM_OPT, "<program opt>");
-    while (true) {
-      int c = current_position_(b);
-      if (!consumeToken(b, IDENTIFIER)) break;
-      if (!empty_element_parsed_guard_(b, "ProgramOpt", c)) break;
-    }
-    exit_section_(b, l, m, true, false, null);
-    return true;
   }
 
   /* ********************************************************** */
@@ -578,6 +901,124 @@ public class MaterialParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // RTSHADER_SYSTEM IDENTIFIER+ ENDL* LBRACE RtShaderSystemItem* RBRACE
+  public static boolean RtShaderSystem(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "RtShaderSystem")) return false;
+    if (!nextTokenIs(b, RTSHADER_SYSTEM)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, RTSHADER_SYSTEM);
+    r = r && RtShaderSystem_1(b, l + 1);
+    r = r && RtShaderSystem_2(b, l + 1);
+    r = r && consumeToken(b, LBRACE);
+    r = r && RtShaderSystem_4(b, l + 1);
+    r = r && consumeToken(b, RBRACE);
+    exit_section_(b, m, RT_SHADER_SYSTEM, r);
+    return r;
+  }
+
+  // IDENTIFIER+
+  private static boolean RtShaderSystem_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "RtShaderSystem_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENTIFIER);
+    while (r) {
+      int c = current_position_(b);
+      if (!consumeToken(b, IDENTIFIER)) break;
+      if (!empty_element_parsed_guard_(b, "RtShaderSystem_1", c)) break;
+    }
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ENDL*
+  private static boolean RtShaderSystem_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "RtShaderSystem_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!consumeToken(b, ENDL)) break;
+      if (!empty_element_parsed_guard_(b, "RtShaderSystem_2", c)) break;
+    }
+    return true;
+  }
+
+  // RtShaderSystemItem*
+  private static boolean RtShaderSystem_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "RtShaderSystem_4")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!RtShaderSystemItem(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "RtShaderSystem_4", c)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // ParamLine | ENDL
+  public static boolean RtShaderSystemItem(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "RtShaderSystemItem")) return false;
+    if (!nextTokenIs(b, "<rt shader system item>", ENDL, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, RT_SHADER_SYSTEM_ITEM, "<rt shader system item>");
+    r = ParamLine(b, l + 1);
+    if (!r) r = consumeToken(b, ENDL);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // SAMPLER IDENTIFIER ENDL* LBRACE SamplerItem* RBRACE
+  public static boolean SamplerBlock(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "SamplerBlock")) return false;
+    if (!nextTokenIs(b, SAMPLER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, SAMPLER, IDENTIFIER);
+    r = r && SamplerBlock_2(b, l + 1);
+    r = r && consumeToken(b, LBRACE);
+    r = r && SamplerBlock_4(b, l + 1);
+    r = r && consumeToken(b, RBRACE);
+    exit_section_(b, m, SAMPLER_BLOCK, r);
+    return r;
+  }
+
+  // ENDL*
+  private static boolean SamplerBlock_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "SamplerBlock_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!consumeToken(b, ENDL)) break;
+      if (!empty_element_parsed_guard_(b, "SamplerBlock_2", c)) break;
+    }
+    return true;
+  }
+
+  // SamplerItem*
+  private static boolean SamplerBlock_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "SamplerBlock_4")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!SamplerItem(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "SamplerBlock_4", c)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // ParamLine | ENDL
+  public static boolean SamplerItem(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "SamplerItem")) return false;
+    if (!nextTokenIs(b, "<sampler item>", ENDL, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, SAMPLER_ITEM, "<sampler item>");
+    r = ParamLine(b, l + 1);
+    if (!r) r = consumeToken(b, ENDL);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
   // ScriptBody*
   static boolean Script(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Script")) return false;
@@ -590,15 +1031,56 @@ public class MaterialParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ProgramBlock | MaterialBlock | ENDL
+  // ImportBlock | SamplerBlock | AbstractBlock | ProgramBlock | MaterialBlock | ENDL
   static boolean ScriptBody(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ScriptBody")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_);
-    r = ProgramBlock(b, l + 1);
+    r = ImportBlock(b, l + 1);
+    if (!r) r = SamplerBlock(b, l + 1);
+    if (!r) r = AbstractBlock(b, l + 1);
+    if (!r) r = ProgramBlock(b, l + 1);
     if (!r) r = MaterialBlock(b, l + 1);
     if (!r) r = consumeToken(b, ENDL);
     exit_section_(b, l, m, r, false, MaterialParser::RecoverDeclaration);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // SHARED_PARAMS_REF IDENTIFIER ENDL
+  public static boolean SharedParamRef(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "SharedParamRef")) return false;
+    if (!nextTokenIs(b, SHARED_PARAMS_REF)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, SHARED_PARAMS_REF, IDENTIFIER, ENDL);
+    exit_section_(b, m, SHARED_PARAM_REF, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // Technique_shadow_materialType IDENTIFIER ENDL
+  public static boolean Technique_shadow_material(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Technique_shadow_material")) return false;
+    if (!nextTokenIs(b, "<technique shadow material>", SHADOW_CASTER_MATERIAL, SHADOW_RECEIVER_MATERIAL)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, TECHNIQUE_SHADOW_MATERIAL, "<technique shadow material>");
+    r = Technique_shadow_materialType(b, l + 1);
+    r = r && consumeTokens(b, 0, IDENTIFIER, ENDL);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // SHADOW_CASTER_MATERIAL | SHADOW_RECEIVER_MATERIAL
+  public static boolean Technique_shadow_materialType(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Technique_shadow_materialType")) return false;
+    if (!nextTokenIs(b, "<technique shadow material type>", SHADOW_CASTER_MATERIAL, SHADOW_RECEIVER_MATERIAL)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, TECHNIQUE_SHADOW_MATERIAL_TYPE, "<technique shadow material type>");
+    r = consumeToken(b, SHADOW_CASTER_MATERIAL);
+    if (!r) r = consumeToken(b, SHADOW_RECEIVER_MATERIAL);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 

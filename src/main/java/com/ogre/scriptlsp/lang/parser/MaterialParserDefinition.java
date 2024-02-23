@@ -21,6 +21,8 @@ public class MaterialParserDefinition implements ParserDefinition {
 
   static public IElementType LINE_COMMENT = new MaterialTokenType("LINE_COMMENT");
 
+  static public IElementType MULTILINE_COMMENT = new MaterialTokenType("MULTILINE_COMMENT");
+
   @Override
   public @NotNull Lexer createLexer(Project project) {
     return new MaterialLexer();

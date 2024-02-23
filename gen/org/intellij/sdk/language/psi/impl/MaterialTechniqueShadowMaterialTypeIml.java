@@ -11,32 +11,20 @@ import static org.intellij.sdk.language.psi.MaterialElementTypes.*;
 import com.ogre.scriptlsp.lang.psi.impl.MaterialElementImp;
 import org.intellij.sdk.language.psi.*;
 
-public class MaterialMaterialPassIml extends MaterialElementImp implements MaterialMaterialPass {
+public class MaterialTechniqueShadowMaterialTypeIml extends MaterialElementImp implements MaterialTechniqueShadowMaterialType {
 
-  public MaterialMaterialPassIml(@NotNull ASTNode node) {
+  public MaterialTechniqueShadowMaterialTypeIml(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull MaterialVisitor visitor) {
-    visitor.visitMaterialPass(this);
+    visitor.visitTechniqueShadowMaterialType(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof MaterialVisitor) accept((MaterialVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public List<MaterialMaterialPassItem> getMaterialPassItemList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, MaterialMaterialPassItem.class);
-  }
-
-  @Override
-  @Nullable
-  public MaterialMaterialPassParent getMaterialPassParent() {
-    return findChildByClass(MaterialMaterialPassParent.class);
   }
 
 }

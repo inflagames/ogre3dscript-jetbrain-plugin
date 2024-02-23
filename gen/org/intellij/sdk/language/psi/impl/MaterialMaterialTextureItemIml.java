@@ -28,9 +28,27 @@ public class MaterialMaterialTextureItemIml extends MaterialElementImp implement
   }
 
   @Override
+  @Nullable
+  public MaterialMaterialSamplerRef getMaterialSamplerRef() {
+    return findChildByClass(MaterialMaterialSamplerRef.class);
+  }
+
+  @Override
+  @Nullable
+  public MaterialMaterialTextureSource getMaterialTextureSource() {
+    return findChildByClass(MaterialMaterialTextureSource.class);
+  }
+
+  @Override
   @NotNull
   public List<MaterialParam> getParamList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, MaterialParam.class);
+  }
+
+  @Override
+  @Nullable
+  public MaterialRtShaderSystem getRtShaderSystem() {
+    return findChildByClass(MaterialRtShaderSystem.class);
   }
 
   @Override

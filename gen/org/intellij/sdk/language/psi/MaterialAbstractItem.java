@@ -6,18 +6,18 @@ import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 import com.ogre.scriptlsp.lang.psi.MaterialElement;
 
-public interface MaterialMaterialTechniqueItem extends MaterialElement {
+public interface MaterialAbstractItem extends MaterialElement {
 
   @Nullable
-  MaterialMaterialPass getMaterialPass();
-
-  @NotNull
-  List<MaterialParam> getParamList();
+  MaterialAbstractMaterial getAbstractMaterial();
 
   @Nullable
-  MaterialTechniqueShadowMaterial getTechniqueShadowMaterial();
+  MaterialAbstractPass getAbstractPass();
 
   @Nullable
-  PsiElement getIdentifier();
+  MaterialAbstractTechnique getAbstractTechnique();
+
+  @Nullable
+  MaterialAbstractTexture getAbstractTexture();
 
 }

@@ -15,9 +15,9 @@ public interface MaterialProgramBlock extends MaterialElement {
   List<MaterialProgramDefault> getProgramDefaultList();
 
   @NotNull
-  MaterialProgramOpt getProgramOpt();
+  MaterialProgramType getProgramType();
 
   @NotNull
-  MaterialProgramType getProgramType();
+  List<MaterialSharedParamRef> getSharedParamRefList();
 
 }

@@ -33,4 +33,22 @@ public class MaterialMaterialTechniqueItemIml extends MaterialElementImp impleme
     return findChildByClass(MaterialMaterialPass.class);
   }
 
+  @Override
+  @NotNull
+  public List<MaterialParam> getParamList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, MaterialParam.class);
+  }
+
+  @Override
+  @Nullable
+  public MaterialTechniqueShadowMaterial getTechniqueShadowMaterial() {
+    return findChildByClass(MaterialTechniqueShadowMaterial.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getIdentifier() {
+    return findChildByType(IDENTIFIER);
+  }
+
 }

@@ -8,8 +8,17 @@ import com.ogre.scriptlsp.lang.psi.MaterialElement;
 
 public interface MaterialMaterialTextureItem extends MaterialElement {
 
+  @Nullable
+  MaterialMaterialSamplerRef getMaterialSamplerRef();
+
+  @Nullable
+  MaterialMaterialTextureSource getMaterialTextureSource();
+
   @NotNull
   List<MaterialParam> getParamList();
+
+  @Nullable
+  MaterialRtShaderSystem getRtShaderSystem();
 
   @Nullable
   PsiElement getIdentifier();

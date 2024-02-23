@@ -11,14 +11,14 @@ import static org.intellij.sdk.language.psi.MaterialElementTypes.*;
 import com.ogre.scriptlsp.lang.psi.impl.MaterialElementImp;
 import org.intellij.sdk.language.psi.*;
 
-public class MaterialMaterialPassIml extends MaterialElementImp implements MaterialMaterialPass {
+public class MaterialRtShaderSystemIml extends MaterialElementImp implements MaterialRtShaderSystem {
 
-  public MaterialMaterialPassIml(@NotNull ASTNode node) {
+  public MaterialRtShaderSystemIml(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull MaterialVisitor visitor) {
-    visitor.visitMaterialPass(this);
+    visitor.visitRtShaderSystem(this);
   }
 
   @Override
@@ -29,14 +29,8 @@ public class MaterialMaterialPassIml extends MaterialElementImp implements Mater
 
   @Override
   @NotNull
-  public List<MaterialMaterialPassItem> getMaterialPassItemList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, MaterialMaterialPassItem.class);
-  }
-
-  @Override
-  @Nullable
-  public MaterialMaterialPassParent getMaterialPassParent() {
-    return findChildByClass(MaterialMaterialPassParent.class);
+  public List<MaterialRtShaderSystemItem> getRtShaderSystemItemList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, MaterialRtShaderSystemItem.class);
   }
 
 }

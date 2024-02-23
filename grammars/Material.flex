@@ -23,42 +23,62 @@ import static com.ogre.scriptlsp.lang.parser.MaterialParserDefinition.*;
 %function advance
 %type IElementType
 
-IDENTIFIER       =  [:jletter:]([:jletterdigit:]|\/)*
+IDENTIFIER       =  ([:jletterdigit:]-){1}([:jletterdigit:]|\/)*
 STRING_LITERAL   =  \"([^\\\"\r\n]|\\[^\r\n])*\"?
 MATCH_LITERAL    =  \*([^\\\"\r\n]|\\[^\r\n])*\*?
 VARIABLE         =  \$[:jletter:][:jletterdigit:]*
 NUMERIC_LITERAL  =  "-"? [:digit:]+ ("." [:digit:]+)?
 LINE_COMMENT     =  "//" .*
+MULTILINE_COMMENT     =  "/*" .* "*/"
 
 //%state IDEN
 
 %%
 
 <YYINITIAL> {
-  "abstract"                     { return ABSTRACT; }
-  "default_params"               { return DEFAULT_PARAMS; }
-  "entry_point"                  { return ENTRY_POINT; }
-  "fragment_program"             { return FRAGMENT_PROGRAM; }
-  "fragment_program_ref"         { return FRAGMENT_PROGRAM_REF; }
-  "import"                       { return IMPORT; }
-  "material"                     { return MATERIAL; }
-  "pass"                         { return PASS; }
-  "profiles"                     { return PROFILES; }
-  "technique"                    { return TECHNIQUE; }
-  "texture_unit"                 { return TEXTURE_UNIT; }
-  "vertex_program"               { return VERTEX_PROGRAM; }
-  "vertex_program_ref"           { return VERTEX_PROGRAM_REF; }
+  "abstract"                         { return ABSTRACT; }
+  "default_params"                   { return DEFAULT_PARAMS; }
+  "from"                             { return FROM; }
+  "import"                           { return IMPORT; }
+  "material"                         { return MATERIAL; }
+  "pass"                             { return PASS; }
+  "technique"                        { return TECHNIQUE; }
+  "texture_unit"                     { return TEXTURE_UNIT; }
+  "rtshader_system"                  { return RTSHADER_SYSTEM; }
+  "shared_params"                    { return SHARED_PARAMS; }
+  "shared_params_ref"                { return SHARED_PARAMS_REF; }
+  "shadow_caster_material"           { return SHADOW_CASTER_MATERIAL; }
+  "shadow_receiver_material"         { return SHADOW_RECEIVER_MATERIAL; }
+  "texture_source"                   { return TEXTURE_SOURCE; }
+  "sampler"                          { return SAMPLER; }
+  "sampler_ref"                      { return SAMPLER_REF; }
 
-  "{"                            { return LBRACE; }
-  "}"                            { return RBRACE; }
-  ":"                            { return COLON; }
+  "fragment_program"                 { return FRAGMENT_PROGRAM; }
+  "fragment_program_ref"             { return FRAGMENT_PROGRAM_REF; }
+  "vertex_program"                   { return VERTEX_PROGRAM; }
+  "vertex_program_ref"               { return VERTEX_PROGRAM_REF; }
+  "geometry_program"                 { return VERTEX_PROGRAM_REF; }
+  "geometry_program_ref"             { return VERTEX_PROGRAM_REF; }
+  "tessellation_hull_program"        { return VERTEX_PROGRAM_REF; }
+  "tessellation_hull_program_ref"    { return VERTEX_PROGRAM_REF; }
+  "tessellation_domain_program"      { return VERTEX_PROGRAM_REF; }
+  "tessellation_domain_program_ref"  { return VERTEX_PROGRAM_REF; }
+  "compute_program"                  { return VERTEX_PROGRAM_REF; }
+  "compute_program_ref"              { return VERTEX_PROGRAM_REF; }
+
+  "{"                                { return LBRACE; }
+  "*"                                { return ASTERISK; }
+  "}"                                { return RBRACE; }
+  ":"                                { return COLON; }
+  ","                                { return COMMA; }
 }
 
-{IDENTIFIER}                     { return IDENTIFIER; }
-{NUMERIC_LITERAL}                { return NUMERIC_LITERAL; }
-{STRING_LITERAL}                 { return STRING_LITERAL; }
-{MATCH_LITERAL}                  { return MATCH_LITERAL; }
-{VARIABLE}                       { return VARIABLE; }
-{LINE_COMMENT}                   { return LINE_COMMENT; }
+{IDENTIFIER}                         { return IDENTIFIER; }
+{NUMERIC_LITERAL}                    { return NUMERIC_LITERAL; }
+{STRING_LITERAL}                     { return STRING_LITERAL; }
+{MATCH_LITERAL}                      { return MATCH_LITERAL; }
+{VARIABLE}                           { return VARIABLE; }
+{LINE_COMMENT}                       { return LINE_COMMENT; }
+{MULTILINE_COMMENT}                  { return MULTILINE_COMMENT; }
 
-[^]                              { return BAD_CHARACTER; }
+[^]                                  { return BAD_CHARACTER; }

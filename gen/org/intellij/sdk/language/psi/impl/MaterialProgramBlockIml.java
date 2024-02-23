@@ -41,14 +41,14 @@ public class MaterialProgramBlockIml extends MaterialElementImp implements Mater
 
   @Override
   @NotNull
-  public MaterialProgramOpt getProgramOpt() {
-    return findNotNullChildByClass(MaterialProgramOpt.class);
+  public MaterialProgramType getProgramType() {
+    return findNotNullChildByClass(MaterialProgramType.class);
   }
 
   @Override
   @NotNull
-  public MaterialProgramType getProgramType() {
-    return findNotNullChildByClass(MaterialProgramType.class);
+  public List<MaterialSharedParamRef> getSharedParamRefList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, MaterialSharedParamRef.class);
   }
 
 }

@@ -11,14 +11,14 @@ import static org.intellij.sdk.language.psi.MaterialElementTypes.*;
 import com.ogre.scriptlsp.lang.psi.impl.MaterialElementImp;
 import org.intellij.sdk.language.psi.*;
 
-public class MaterialMaterialPassIml extends MaterialElementImp implements MaterialMaterialPass {
+public class MaterialImportBlockIml extends MaterialElementImp implements MaterialImportBlock {
 
-  public MaterialMaterialPassIml(@NotNull ASTNode node) {
+  public MaterialImportBlockIml(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull MaterialVisitor visitor) {
-    visitor.visitMaterialPass(this);
+    visitor.visitImportBlock(this);
   }
 
   @Override
@@ -29,14 +29,14 @@ public class MaterialMaterialPassIml extends MaterialElementImp implements Mater
 
   @Override
   @NotNull
-  public List<MaterialMaterialPassItem> getMaterialPassItemList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, MaterialMaterialPassItem.class);
+  public MaterialImportName getImportName() {
+    return findNotNullChildByClass(MaterialImportName.class);
   }
 
   @Override
-  @Nullable
-  public MaterialMaterialPassParent getMaterialPassParent() {
-    return findChildByClass(MaterialMaterialPassParent.class);
+  @NotNull
+  public MaterialImportSource getImportSource() {
+    return findNotNullChildByClass(MaterialImportSource.class);
   }
 
 }

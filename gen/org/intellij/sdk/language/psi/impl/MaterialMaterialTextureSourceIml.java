@@ -11,20 +11,26 @@ import static org.intellij.sdk.language.psi.MaterialElementTypes.*;
 import com.ogre.scriptlsp.lang.psi.impl.MaterialElementImp;
 import org.intellij.sdk.language.psi.*;
 
-public class MaterialProgramOptIml extends MaterialElementImp implements MaterialProgramOpt {
+public class MaterialMaterialTextureSourceIml extends MaterialElementImp implements MaterialMaterialTextureSource {
 
-  public MaterialProgramOptIml(@NotNull ASTNode node) {
+  public MaterialMaterialTextureSourceIml(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull MaterialVisitor visitor) {
-    visitor.visitProgramOpt(this);
+    visitor.visitMaterialTextureSource(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof MaterialVisitor) accept((MaterialVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public List<MaterialMaterialTextureSourceItem> getMaterialTextureSourceItemList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, MaterialMaterialTextureSourceItem.class);
   }
 
 }

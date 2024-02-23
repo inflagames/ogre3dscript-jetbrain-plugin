@@ -6,6 +6,9 @@ import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 import com.ogre.scriptlsp.lang.psi.MaterialElement;
 
-public interface MaterialProgramOpt extends MaterialElement {
+public interface MaterialRtShaderSystem extends MaterialElement {
+
+  @NotNull
+  List<MaterialRtShaderSystemItem> getRtShaderSystemItemList();
 
 }

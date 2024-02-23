@@ -11,14 +11,14 @@ import static org.intellij.sdk.language.psi.MaterialElementTypes.*;
 import com.ogre.scriptlsp.lang.psi.impl.MaterialElementImp;
 import org.intellij.sdk.language.psi.*;
 
-public class MaterialMaterialPassItemIml extends MaterialElementImp implements MaterialMaterialPassItem {
+public class MaterialTechniqueShadowMaterialIml extends MaterialElementImp implements MaterialTechniqueShadowMaterial {
 
-  public MaterialMaterialPassItemIml(@NotNull ASTNode node) {
+  public MaterialTechniqueShadowMaterialIml(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull MaterialVisitor visitor) {
-    visitor.visitMaterialPassItem(this);
+    visitor.visitTechniqueShadowMaterial(this);
   }
 
   @Override
@@ -28,33 +28,15 @@ public class MaterialMaterialPassItemIml extends MaterialElementImp implements M
   }
 
   @Override
-  @Nullable
-  public MaterialMaterialProgram getMaterialProgram() {
-    return findChildByClass(MaterialMaterialProgram.class);
-  }
-
-  @Override
-  @Nullable
-  public MaterialMaterialTexture getMaterialTexture() {
-    return findChildByClass(MaterialMaterialTexture.class);
+  @NotNull
+  public MaterialTechniqueShadowMaterialType getTechniqueShadowMaterialType() {
+    return findNotNullChildByClass(MaterialTechniqueShadowMaterialType.class);
   }
 
   @Override
   @NotNull
-  public List<MaterialParam> getParamList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, MaterialParam.class);
-  }
-
-  @Override
-  @Nullable
-  public MaterialRtShaderSystem getRtShaderSystem() {
-    return findChildByClass(MaterialRtShaderSystem.class);
-  }
-
-  @Override
-  @Nullable
   public PsiElement getIdentifier() {
-    return findChildByType(IDENTIFIER);
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

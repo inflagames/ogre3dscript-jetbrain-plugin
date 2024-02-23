@@ -11,14 +11,14 @@ import static org.intellij.sdk.language.psi.MaterialElementTypes.*;
 import com.ogre.scriptlsp.lang.psi.impl.MaterialElementImp;
 import org.intellij.sdk.language.psi.*;
 
-public class MaterialMaterialPassNameIml extends MaterialElementImp implements MaterialMaterialPassName {
+public class MaterialSharedParamRefIml extends MaterialElementImp implements MaterialSharedParamRef {
 
-  public MaterialMaterialPassNameIml(@NotNull ASTNode node) {
+  public MaterialSharedParamRefIml(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull MaterialVisitor visitor) {
-    visitor.visitMaterialPassName(this);
+    visitor.visitSharedParamRef(this);
   }
 
   @Override
@@ -28,15 +28,9 @@ public class MaterialMaterialPassNameIml extends MaterialElementImp implements M
   }
 
   @Override
-  @Nullable
+  @NotNull
   public PsiElement getIdentifier() {
-    return findChildByType(IDENTIFIER);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getMatchLiteral() {
-    return findChildByType(MATCH_LITERAL);
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

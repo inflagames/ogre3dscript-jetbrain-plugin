@@ -18,6 +18,9 @@ public interface MaterialMaterialPassItem extends MaterialElement {
   List<MaterialParam> getParamList();
 
   @Nullable
+  MaterialRtShaderSystem getRtShaderSystem();
+
+  @Nullable
   PsiElement getIdentifier();
 
 }

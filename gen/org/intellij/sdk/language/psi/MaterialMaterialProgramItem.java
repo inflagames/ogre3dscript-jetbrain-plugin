@@ -12,6 +12,9 @@ public interface MaterialMaterialProgramItem extends MaterialElement {
   List<MaterialParam> getParamList();
 
   @Nullable
+  MaterialSharedParamRef getSharedParamRef();
+
+  @Nullable
   PsiElement getIdentifier();
 
 }

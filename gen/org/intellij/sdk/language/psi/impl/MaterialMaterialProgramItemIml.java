@@ -35,6 +35,12 @@ public class MaterialMaterialProgramItemIml extends MaterialElementImp implement
 
   @Override
   @Nullable
+  public MaterialSharedParamRef getSharedParamRef() {
+    return findChildByClass(MaterialSharedParamRef.class);
+  }
+
+  @Override
+  @Nullable
   public PsiElement getIdentifier() {
     return findChildByType(IDENTIFIER);
   }
